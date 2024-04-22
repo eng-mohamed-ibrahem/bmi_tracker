@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "907079868416",
+    "project_id": "bmi-tracker-bb8be",
+    "storage_bucket": "bmi-tracker-bb8be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:907079868416:android:1ea71e131be315f5f178e5",
+        "android_client_info": {
+          "package_name": "com.example.bmi_tracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANOEmDgNgmO4_W0daDij0dSAEJfzFBSjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
