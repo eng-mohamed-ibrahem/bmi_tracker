@@ -1,5 +1,6 @@
 import 'package:bmi_tracker/config/generate_router.dart';
 import 'package:bmi_tracker/core/constant/app_metrices.dart';
+import 'package:bmi_tracker/core/utils/snackbar/handler_snackbar.dart';
 import 'package:bmi_tracker/viewmodel/auth_viewmodel/auth_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +15,7 @@ class AuthPage extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Text(
               'Welcome to BMI Tracker',
@@ -29,8 +31,12 @@ class AuthPage extends StatelessWidget {
             BlocConsumer<AuthViewmodel, AuthViewModelState>(
               listener: (context, state) {
                 if (state.isSinginSuccess) {
+                  showSnackbar(context, message: 'Sign in successful');
                   Navigator.of(context)
                       .pushReplacementNamed(GenerateRouter.home);
+                }
+                if (state.isSinginError) {
+                  showSnackbar(context, message: state.error!);
                 }
               },
               builder: (context, state) {

@@ -1,6 +1,9 @@
+import 'package:bmi_tracker/core/constant/firebase_constants.dart';
 import 'package:bmi_tracker/core/error/failure.dart';
 import 'package:bmi_tracker/core/handle_result/result.dart';
+import 'package:bmi_tracker/model/bmi_model/bmi_model.dart';
 import 'package:bmi_tracker/repositories/user_repository/user_repo_interface.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -23,8 +26,38 @@ class UserRepoImpl implements UserRepoInterface {
   }
 
   @override
-  Future<ResultHandler<bool, ServerFailure>> uploadMbi(String mbi) {
-    throw UnimplementedError();
+  Future<ResultHandler<bool, ServerFailure>> uploadMbi({
+    required double height,
+    required double weight,
+    required double mbi,
+    required int age,
+  }) async {
+    try {
+      var connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult.contains(ConnectivityResult.wifi) ||
+          connectivityResult.contains(ConnectivityResult.mobile)) {
+        BmiModel newBmi = BmiModel(
+          height: height,
+          weight: weight,
+          age: age,
+          bmiResult: mbi,
+          time: DateTime.now(),
+        );
+        await FirebaseFirestore.instance
+            .collection(FirebaseConstants.usersCollection)
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection(FirebaseConstants.bmiEntries)
+            .add(
+              newBmi.toJson(),
+            );
+        return const ResultHandler.success(data: true);
+      } else {
+        return ResultHandler.failure(
+            error: ServerFailure('No internet connection to upload, please try again'));
+      }
+    } catch (e) {
+      return ResultHandler.failure(error: ServerFailure(e.toString()));
+    }
   }
 
   @override

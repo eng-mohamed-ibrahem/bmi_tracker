@@ -1,5 +1,7 @@
+import 'package:bmi_tracker/core/constant/app_metrices.dart';
 import 'package:bmi_tracker/view/pages/bottom_navigation/bmi_entries_view.dart';
 import 'package:bmi_tracker/view/pages/bottom_navigation/bmi_tracker_view.dart';
+import 'package:bmi_tracker/view/pages/bottom_navigation/user_profile.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -10,7 +12,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final PageStorageKey trackerKey = const PageStorageKey('MBITracker');
   final PageStorageKey entriesKey = const PageStorageKey('BMIEntries');
   int currentIndex = 0;
 
@@ -23,12 +24,11 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     screens = [
-      MBITracker(
-        key: trackerKey,
-      ),
+      const MBITracker(),
       BMIEntries(
         key: entriesKey,
       ),
+      const UserProfile(),
     ];
     super.initState();
   }
@@ -36,7 +36,17 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screens[currentIndex],
+      appBar: AppBar(
+        title: currentIndex == 0
+            ? const Text('BMI Tracker')
+            : currentIndex == 1
+                ? const Text('Previous BMI Entries')
+                : const Text('My Profile'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(AppMetrices.widthSpace),
+        child: screens[currentIndex],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: (tappedIndex) {
@@ -52,6 +62,10 @@ class _HomeState extends State<Home> {
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
             label: 'Entries',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
       ),
