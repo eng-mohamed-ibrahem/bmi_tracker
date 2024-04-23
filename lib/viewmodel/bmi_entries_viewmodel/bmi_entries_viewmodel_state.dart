@@ -4,17 +4,12 @@ part of 'bmi_entries_viewmodel.dart';
 class BmiEntriesViewmodelState with _$BmiEntriesViewmodelState {
   const factory BmiEntriesViewmodelState({
     @Default(true) bool isInitialized,
-    @Default(false) bool isEntriesLoading,
-    @Default(false) bool isEntriesError,
-    @Default(false) bool isEntriesSuccess,
-    @Default([]) List<BmiModel> allEntries,
     @Default(10) int entriesCountPerPage,
-    @Default(10) int currentEntries,
-    @Default(false) bool isThereNextEntries,
-    @Default(false) bool isNextEntriesLoading,
-    @Default(false) bool isNextEntriesError,
-    @Default(false) bool isNextEntriesSuccess,
-    @Default(null) List<BmiModel>? nextEntries,
+    @Default(10) int currentInRangEntries,
+    @Default(false) bool loadNextPage,
+    @Default(false) bool isStreamInitialized,
+    @Default(false) bool isStreamError,
+    @Default(null) Stream<QuerySnapshot<Map<String, dynamic>>>? bmiStream,
     @Default(null) String? error,
   }) = _BmiEntriesViewmodelState;
 }

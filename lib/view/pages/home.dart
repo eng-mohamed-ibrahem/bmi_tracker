@@ -40,7 +40,7 @@ class _HomeState extends State<Home> {
         title: currentIndex == 0
             ? const Text('BMI Tracker')
             : currentIndex == 1
-                ? const Text('Previous BMI Entries')
+                ? const Text('BMI Entries')
                 : const Text('My Profile'),
       ),
       body: Padding(

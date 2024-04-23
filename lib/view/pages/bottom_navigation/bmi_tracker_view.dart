@@ -1,6 +1,6 @@
 import 'package:bmi_tracker/core/constant/app_metrices.dart';
 import 'package:bmi_tracker/core/utils/snackbar/handler_snackbar.dart';
-import 'package:bmi_tracker/view/widgets/input_field/bmi_field.dart';
+import 'package:bmi_tracker/view/widgets/input_field/bmi_submit_field.dart';
 import 'package:bmi_tracker/viewmodel/bmi_submit_viewmodel/bmi_submit_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -156,8 +156,6 @@ class _MBITrackerState extends State<MBITracker> {
                         weight: double.parse(weightController.text),
                         age: int.parse(ageController.text),
                       );
-                  heightController.clear();
-                  weightController.clear();
                 }
               },
               label: const Text('Calculate BMI'),

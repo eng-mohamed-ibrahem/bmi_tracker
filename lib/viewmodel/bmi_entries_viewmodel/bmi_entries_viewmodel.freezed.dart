@@ -17,17 +17,13 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$BmiEntriesViewmodelState {
   bool get isInitialized => throw _privateConstructorUsedError;
-  bool get isEntriesLoading => throw _privateConstructorUsedError;
-  bool get isEntriesError => throw _privateConstructorUsedError;
-  bool get isEntriesSuccess => throw _privateConstructorUsedError;
-  List<BmiModel> get allEntries => throw _privateConstructorUsedError;
   int get entriesCountPerPage => throw _privateConstructorUsedError;
-  int get currentEntries => throw _privateConstructorUsedError;
-  bool get isThereNextEntries => throw _privateConstructorUsedError;
-  bool get isNextEntriesLoading => throw _privateConstructorUsedError;
-  bool get isNextEntriesError => throw _privateConstructorUsedError;
-  bool get isNextEntriesSuccess => throw _privateConstructorUsedError;
-  List<BmiModel>? get nextEntries => throw _privateConstructorUsedError;
+  int get currentInRangEntries => throw _privateConstructorUsedError;
+  bool get loadNextPage => throw _privateConstructorUsedError;
+  bool get isStreamInitialized => throw _privateConstructorUsedError;
+  bool get isStreamError => throw _privateConstructorUsedError;
+  Stream<QuerySnapshot<Map<String, dynamic>>>? get bmiStream =>
+      throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -43,17 +39,12 @@ abstract class $BmiEntriesViewmodelStateCopyWith<$Res> {
   @useResult
   $Res call(
       {bool isInitialized,
-      bool isEntriesLoading,
-      bool isEntriesError,
-      bool isEntriesSuccess,
-      List<BmiModel> allEntries,
       int entriesCountPerPage,
-      int currentEntries,
-      bool isThereNextEntries,
-      bool isNextEntriesLoading,
-      bool isNextEntriesError,
-      bool isNextEntriesSuccess,
-      List<BmiModel>? nextEntries,
+      int currentInRangEntries,
+      bool loadNextPage,
+      bool isStreamInitialized,
+      bool isStreamError,
+      Stream<QuerySnapshot<Map<String, dynamic>>>? bmiStream,
       String? error});
 }
 
@@ -72,17 +63,12 @@ class _$BmiEntriesViewmodelStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? isInitialized = null,
-    Object? isEntriesLoading = null,
-    Object? isEntriesError = null,
-    Object? isEntriesSuccess = null,
-    Object? allEntries = null,
     Object? entriesCountPerPage = null,
-    Object? currentEntries = null,
-    Object? isThereNextEntries = null,
-    Object? isNextEntriesLoading = null,
-    Object? isNextEntriesError = null,
-    Object? isNextEntriesSuccess = null,
-    Object? nextEntries = freezed,
+    Object? currentInRangEntries = null,
+    Object? loadNextPage = null,
+    Object? isStreamInitialized = null,
+    Object? isStreamError = null,
+    Object? bmiStream = freezed,
     Object? error = freezed,
   }) {
     return _then(_value.copyWith(
@@ -90,50 +76,30 @@ class _$BmiEntriesViewmodelStateCopyWithImpl<$Res,
           ? _value.isInitialized
           : isInitialized // ignore: cast_nullable_to_non_nullable
               as bool,
-      isEntriesLoading: null == isEntriesLoading
-          ? _value.isEntriesLoading
-          : isEntriesLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isEntriesError: null == isEntriesError
-          ? _value.isEntriesError
-          : isEntriesError // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isEntriesSuccess: null == isEntriesSuccess
-          ? _value.isEntriesSuccess
-          : isEntriesSuccess // ignore: cast_nullable_to_non_nullable
-              as bool,
-      allEntries: null == allEntries
-          ? _value.allEntries
-          : allEntries // ignore: cast_nullable_to_non_nullable
-              as List<BmiModel>,
       entriesCountPerPage: null == entriesCountPerPage
           ? _value.entriesCountPerPage
           : entriesCountPerPage // ignore: cast_nullable_to_non_nullable
               as int,
-      currentEntries: null == currentEntries
-          ? _value.currentEntries
-          : currentEntries // ignore: cast_nullable_to_non_nullable
+      currentInRangEntries: null == currentInRangEntries
+          ? _value.currentInRangEntries
+          : currentInRangEntries // ignore: cast_nullable_to_non_nullable
               as int,
-      isThereNextEntries: null == isThereNextEntries
-          ? _value.isThereNextEntries
-          : isThereNextEntries // ignore: cast_nullable_to_non_nullable
+      loadNextPage: null == loadNextPage
+          ? _value.loadNextPage
+          : loadNextPage // ignore: cast_nullable_to_non_nullable
               as bool,
-      isNextEntriesLoading: null == isNextEntriesLoading
-          ? _value.isNextEntriesLoading
-          : isNextEntriesLoading // ignore: cast_nullable_to_non_nullable
+      isStreamInitialized: null == isStreamInitialized
+          ? _value.isStreamInitialized
+          : isStreamInitialized // ignore: cast_nullable_to_non_nullable
               as bool,
-      isNextEntriesError: null == isNextEntriesError
-          ? _value.isNextEntriesError
-          : isNextEntriesError // ignore: cast_nullable_to_non_nullable
+      isStreamError: null == isStreamError
+          ? _value.isStreamError
+          : isStreamError // ignore: cast_nullable_to_non_nullable
               as bool,
-      isNextEntriesSuccess: null == isNextEntriesSuccess
-          ? _value.isNextEntriesSuccess
-          : isNextEntriesSuccess // ignore: cast_nullable_to_non_nullable
-              as bool,
-      nextEntries: freezed == nextEntries
-          ? _value.nextEntries
-          : nextEntries // ignore: cast_nullable_to_non_nullable
-              as List<BmiModel>?,
+      bmiStream: freezed == bmiStream
+          ? _value.bmiStream
+          : bmiStream // ignore: cast_nullable_to_non_nullable
+              as Stream<QuerySnapshot<Map<String, dynamic>>>?,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -153,17 +119,12 @@ abstract class _$$BmiEntriesViewmodelStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {bool isInitialized,
-      bool isEntriesLoading,
-      bool isEntriesError,
-      bool isEntriesSuccess,
-      List<BmiModel> allEntries,
       int entriesCountPerPage,
-      int currentEntries,
-      bool isThereNextEntries,
-      bool isNextEntriesLoading,
-      bool isNextEntriesError,
-      bool isNextEntriesSuccess,
-      List<BmiModel>? nextEntries,
+      int currentInRangEntries,
+      bool loadNextPage,
+      bool isStreamInitialized,
+      bool isStreamError,
+      Stream<QuerySnapshot<Map<String, dynamic>>>? bmiStream,
       String? error});
 }
 
@@ -181,17 +142,12 @@ class __$$BmiEntriesViewmodelStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isInitialized = null,
-    Object? isEntriesLoading = null,
-    Object? isEntriesError = null,
-    Object? isEntriesSuccess = null,
-    Object? allEntries = null,
     Object? entriesCountPerPage = null,
-    Object? currentEntries = null,
-    Object? isThereNextEntries = null,
-    Object? isNextEntriesLoading = null,
-    Object? isNextEntriesError = null,
-    Object? isNextEntriesSuccess = null,
-    Object? nextEntries = freezed,
+    Object? currentInRangEntries = null,
+    Object? loadNextPage = null,
+    Object? isStreamInitialized = null,
+    Object? isStreamError = null,
+    Object? bmiStream = freezed,
     Object? error = freezed,
   }) {
     return _then(_$BmiEntriesViewmodelStateImpl(
@@ -199,50 +155,30 @@ class __$$BmiEntriesViewmodelStateImplCopyWithImpl<$Res>
           ? _value.isInitialized
           : isInitialized // ignore: cast_nullable_to_non_nullable
               as bool,
-      isEntriesLoading: null == isEntriesLoading
-          ? _value.isEntriesLoading
-          : isEntriesLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isEntriesError: null == isEntriesError
-          ? _value.isEntriesError
-          : isEntriesError // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isEntriesSuccess: null == isEntriesSuccess
-          ? _value.isEntriesSuccess
-          : isEntriesSuccess // ignore: cast_nullable_to_non_nullable
-              as bool,
-      allEntries: null == allEntries
-          ? _value.allEntries
-          : allEntries // ignore: cast_nullable_to_non_nullable
-              as List<BmiModel>,
       entriesCountPerPage: null == entriesCountPerPage
           ? _value.entriesCountPerPage
           : entriesCountPerPage // ignore: cast_nullable_to_non_nullable
               as int,
-      currentEntries: null == currentEntries
-          ? _value.currentEntries
-          : currentEntries // ignore: cast_nullable_to_non_nullable
+      currentInRangEntries: null == currentInRangEntries
+          ? _value.currentInRangEntries
+          : currentInRangEntries // ignore: cast_nullable_to_non_nullable
               as int,
-      isThereNextEntries: null == isThereNextEntries
-          ? _value.isThereNextEntries
-          : isThereNextEntries // ignore: cast_nullable_to_non_nullable
+      loadNextPage: null == loadNextPage
+          ? _value.loadNextPage
+          : loadNextPage // ignore: cast_nullable_to_non_nullable
               as bool,
-      isNextEntriesLoading: null == isNextEntriesLoading
-          ? _value.isNextEntriesLoading
-          : isNextEntriesLoading // ignore: cast_nullable_to_non_nullable
+      isStreamInitialized: null == isStreamInitialized
+          ? _value.isStreamInitialized
+          : isStreamInitialized // ignore: cast_nullable_to_non_nullable
               as bool,
-      isNextEntriesError: null == isNextEntriesError
-          ? _value.isNextEntriesError
-          : isNextEntriesError // ignore: cast_nullable_to_non_nullable
+      isStreamError: null == isStreamError
+          ? _value.isStreamError
+          : isStreamError // ignore: cast_nullable_to_non_nullable
               as bool,
-      isNextEntriesSuccess: null == isNextEntriesSuccess
-          ? _value.isNextEntriesSuccess
-          : isNextEntriesSuccess // ignore: cast_nullable_to_non_nullable
-              as bool,
-      nextEntries: freezed == nextEntries
-          ? _value.nextEntries
-          : nextEntries // ignore: cast_nullable_to_non_nullable
-              as List<BmiModel>?,
+      bmiStream: freezed == bmiStream
+          ? _value.bmiStream
+          : bmiStream // ignore: cast_nullable_to_non_nullable
+              as Stream<QuerySnapshot<Map<String, dynamic>>>?,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -256,17 +192,12 @@ class __$$BmiEntriesViewmodelStateImplCopyWithImpl<$Res>
 class _$BmiEntriesViewmodelStateImpl implements _BmiEntriesViewmodelState {
   const _$BmiEntriesViewmodelStateImpl(
       {this.isInitialized = true,
-      this.isEntriesLoading = false,
-      this.isEntriesError = false,
-      this.isEntriesSuccess = false,
-      this.allEntries = const [],
       this.entriesCountPerPage = 10,
-      this.currentEntries = 10,
-      this.isThereNextEntries = false,
-      this.isNextEntriesLoading = false,
-      this.isNextEntriesError = false,
-      this.isNextEntriesSuccess = false,
-      this.nextEntries = null,
+      this.currentInRangEntries = 10,
+      this.loadNextPage = false,
+      this.isStreamInitialized = false,
+      this.isStreamError = false,
+      this.bmiStream = null,
       this.error = null});
 
   @override
@@ -274,44 +205,29 @@ class _$BmiEntriesViewmodelStateImpl implements _BmiEntriesViewmodelState {
   final bool isInitialized;
   @override
   @JsonKey()
-  final bool isEntriesLoading;
-  @override
-  @JsonKey()
-  final bool isEntriesError;
-  @override
-  @JsonKey()
-  final bool isEntriesSuccess;
-  @override
-  @JsonKey()
-  final List<BmiModel> allEntries;
-  @override
-  @JsonKey()
   final int entriesCountPerPage;
   @override
   @JsonKey()
-  final int currentEntries;
+  final int currentInRangEntries;
   @override
   @JsonKey()
-  final bool isThereNextEntries;
+  final bool loadNextPage;
   @override
   @JsonKey()
-  final bool isNextEntriesLoading;
+  final bool isStreamInitialized;
   @override
   @JsonKey()
-  final bool isNextEntriesError;
+  final bool isStreamError;
   @override
   @JsonKey()
-  final bool isNextEntriesSuccess;
-  @override
-  @JsonKey()
-  final List<BmiModel>? nextEntries;
+  final Stream<QuerySnapshot<Map<String, dynamic>>>? bmiStream;
   @override
   @JsonKey()
   final String? error;
 
   @override
   String toString() {
-    return 'BmiEntriesViewmodelState(isInitialized: $isInitialized, isEntriesLoading: $isEntriesLoading, isEntriesError: $isEntriesError, isEntriesSuccess: $isEntriesSuccess, allEntries: $allEntries, entriesCountPerPage: $entriesCountPerPage, currentEntries: $currentEntries, isThereNextEntries: $isThereNextEntries, isNextEntriesLoading: $isNextEntriesLoading, isNextEntriesError: $isNextEntriesError, isNextEntriesSuccess: $isNextEntriesSuccess, nextEntries: $nextEntries, error: $error)';
+    return 'BmiEntriesViewmodelState(isInitialized: $isInitialized, entriesCountPerPage: $entriesCountPerPage, currentInRangEntries: $currentInRangEntries, loadNextPage: $loadNextPage, isStreamInitialized: $isStreamInitialized, isStreamError: $isStreamError, bmiStream: $bmiStream, error: $error)';
   }
 
   @override
@@ -321,28 +237,18 @@ class _$BmiEntriesViewmodelStateImpl implements _BmiEntriesViewmodelState {
             other is _$BmiEntriesViewmodelStateImpl &&
             (identical(other.isInitialized, isInitialized) ||
                 other.isInitialized == isInitialized) &&
-            (identical(other.isEntriesLoading, isEntriesLoading) ||
-                other.isEntriesLoading == isEntriesLoading) &&
-            (identical(other.isEntriesError, isEntriesError) ||
-                other.isEntriesError == isEntriesError) &&
-            (identical(other.isEntriesSuccess, isEntriesSuccess) ||
-                other.isEntriesSuccess == isEntriesSuccess) &&
-            const DeepCollectionEquality()
-                .equals(other.allEntries, allEntries) &&
             (identical(other.entriesCountPerPage, entriesCountPerPage) ||
                 other.entriesCountPerPage == entriesCountPerPage) &&
-            (identical(other.currentEntries, currentEntries) ||
-                other.currentEntries == currentEntries) &&
-            (identical(other.isThereNextEntries, isThereNextEntries) ||
-                other.isThereNextEntries == isThereNextEntries) &&
-            (identical(other.isNextEntriesLoading, isNextEntriesLoading) ||
-                other.isNextEntriesLoading == isNextEntriesLoading) &&
-            (identical(other.isNextEntriesError, isNextEntriesError) ||
-                other.isNextEntriesError == isNextEntriesError) &&
-            (identical(other.isNextEntriesSuccess, isNextEntriesSuccess) ||
-                other.isNextEntriesSuccess == isNextEntriesSuccess) &&
-            const DeepCollectionEquality()
-                .equals(other.nextEntries, nextEntries) &&
+            (identical(other.currentInRangEntries, currentInRangEntries) ||
+                other.currentInRangEntries == currentInRangEntries) &&
+            (identical(other.loadNextPage, loadNextPage) ||
+                other.loadNextPage == loadNextPage) &&
+            (identical(other.isStreamInitialized, isStreamInitialized) ||
+                other.isStreamInitialized == isStreamInitialized) &&
+            (identical(other.isStreamError, isStreamError) ||
+                other.isStreamError == isStreamError) &&
+            (identical(other.bmiStream, bmiStream) ||
+                other.bmiStream == bmiStream) &&
             (identical(other.error, error) || other.error == error));
   }
 
@@ -350,17 +256,12 @@ class _$BmiEntriesViewmodelStateImpl implements _BmiEntriesViewmodelState {
   int get hashCode => Object.hash(
       runtimeType,
       isInitialized,
-      isEntriesLoading,
-      isEntriesError,
-      isEntriesSuccess,
-      const DeepCollectionEquality().hash(allEntries),
       entriesCountPerPage,
-      currentEntries,
-      isThereNextEntries,
-      isNextEntriesLoading,
-      isNextEntriesError,
-      isNextEntriesSuccess,
-      const DeepCollectionEquality().hash(nextEntries),
+      currentInRangEntries,
+      loadNextPage,
+      isStreamInitialized,
+      isStreamError,
+      bmiStream,
       error);
 
   @JsonKey(ignore: true)
@@ -374,43 +275,28 @@ class _$BmiEntriesViewmodelStateImpl implements _BmiEntriesViewmodelState {
 abstract class _BmiEntriesViewmodelState implements BmiEntriesViewmodelState {
   const factory _BmiEntriesViewmodelState(
       {final bool isInitialized,
-      final bool isEntriesLoading,
-      final bool isEntriesError,
-      final bool isEntriesSuccess,
-      final List<BmiModel> allEntries,
       final int entriesCountPerPage,
-      final int currentEntries,
-      final bool isThereNextEntries,
-      final bool isNextEntriesLoading,
-      final bool isNextEntriesError,
-      final bool isNextEntriesSuccess,
-      final List<BmiModel>? nextEntries,
+      final int currentInRangEntries,
+      final bool loadNextPage,
+      final bool isStreamInitialized,
+      final bool isStreamError,
+      final Stream<QuerySnapshot<Map<String, dynamic>>>? bmiStream,
       final String? error}) = _$BmiEntriesViewmodelStateImpl;
 
   @override
   bool get isInitialized;
   @override
-  bool get isEntriesLoading;
-  @override
-  bool get isEntriesError;
-  @override
-  bool get isEntriesSuccess;
-  @override
-  List<BmiModel> get allEntries;
-  @override
   int get entriesCountPerPage;
   @override
-  int get currentEntries;
+  int get currentInRangEntries;
   @override
-  bool get isThereNextEntries;
+  bool get loadNextPage;
   @override
-  bool get isNextEntriesLoading;
+  bool get isStreamInitialized;
   @override
-  bool get isNextEntriesError;
+  bool get isStreamError;
   @override
-  bool get isNextEntriesSuccess;
-  @override
-  List<BmiModel>? get nextEntries;
+  Stream<QuerySnapshot<Map<String, dynamic>>>? get bmiStream;
   @override
   String? get error;
   @override

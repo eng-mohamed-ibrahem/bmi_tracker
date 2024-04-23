@@ -1,61 +1,48 @@
-import 'package:bmi_tracker/model/bmi_model/bmi_model.dart';
+import 'dart:developer';
+
+import 'package:bmi_tracker/repositories/bmi_repository/bmi_repo_interface.dart';
 import 'package:bmi_tracker/repositories/user_repository/user_repo_interface.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'bmi_entries_viewmodel_state.dart';
 part 'bmi_entries_viewmodel.freezed.dart';
+part 'bmi_entries_viewmodel_state.dart';
 
 class BmiEntriesViewmodel extends Cubit<BmiEntriesViewmodelState> {
-  BmiEntriesViewmodel({required this.userRepo})
+  BmiEntriesViewmodel({required this.bmiRepo, required this.userRepo})
       : super(const BmiEntriesViewmodelState());
+  final BmiRepoInterface bmiRepo;
   final UserRepoInterface userRepo;
   static BmiEntriesViewmodel get(BuildContext context) =>
       BlocProvider.of<BmiEntriesViewmodel>(context);
 
-  void getEntries({
-    bool? nextPage,
-  }) async {
-    emit(reset().copyWith(isEntriesLoading: true));
-    var result = await userRepo.fetchEntriesPerPage(
-      entriesPerPage: 10,
-      lastDocumentSnapshot: null,
-    );
+  void bmiStream({bool loadNextPage = false}) async {
+    emit(state.copyWith(loadNextPage: loadNextPage));
+    log('loadNextPage cubit = ${state.loadNextPage}');
+    var result = await bmiRepo.getBmiStream(
+        limitQuery: loadNextPage
+            ? state.entriesCountPerPage + 10
+            : state.entriesCountPerPage);
     result.when(
-      success: (entries) {
+      success: (stream) {
         emit(
-          reset().copyWith(
-            isEntriesLoading: false,
-            isEntriesSuccess: true,
-            allEntries: [...state.allEntries, ...entries],
+          state.copyWith(
+            isStreamInitialized: true,
+            bmiStream: stream,
+            loadNextPage: false,
           ),
         );
       },
       failure: (failure) {
         emit(
           state.copyWith(
-            isEntriesLoading: false,
-            isEntriesError: true,
+            isStreamError: true,
             error: failure.message,
           ),
         );
       },
-    );
-  }
-
-  void nextEntries() async {}
-  BmiEntriesViewmodelState reset() {
-    return state.copyWith(
-      isEntriesLoading: false,
-      isEntriesError: false,
-      isEntriesSuccess: false,
-      nextEntries: [],
-      isNextEntriesLoading: false,
-      isNextEntriesError: false,
-      isNextEntriesSuccess: false,
-      error: null,
-      isThereNextEntries: false,
     );
   }
 }

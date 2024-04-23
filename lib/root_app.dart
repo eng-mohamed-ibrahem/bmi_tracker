@@ -23,6 +23,7 @@ class RootApp extends StatelessWidget {
         BlocProvider<BmiEntriesViewmodel>(
           create: (context) => BmiEntriesViewmodel(
             userRepo: kUserRepo,
+            bmiRepo: kBmiRepo,
           ),
         ),
         BlocProvider<ProfileViewmodel>(

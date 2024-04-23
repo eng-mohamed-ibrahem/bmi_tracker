@@ -1,3 +1,4 @@
+import 'package:bmi_tracker/model/bmi_model/bmi_model.dart';
 import 'package:bmi_tracker/repositories/user_repository/user_repo_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,8 +38,16 @@ class BmiSubmitViewmodel extends Cubit<BmiSubmitViewModelState> {
         isBmiUploading: true,
       ),
     );
+    BmiModel newBmi = BmiModel(
+      height: height,
+      weight: weight,
+      age: age,
+      bmiResult: state.bmiResult!,
+      time: DateTime.now(),
+    );
     var result = await userRepo.uploadMbi(
-        height: height, weight: weight, mbi: mbi, age: age);
+      bmiModel: newBmi,
+    );
     result.when(
       success: (uploaded) {
         emit(

@@ -29,32 +29,34 @@ class UserProfile extends StatelessWidget {
               showSnackbar(context, message: 'Please wait...');
             }
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'You signed in as: Anonymous',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20),
-              ),
-              const SizedBox(height: AppMetrices.heightSpace2),
-              ElevatedButton(
-                onPressed: state.isLogoutLoading
-                    ? null
-                    : () {
-                        showLogoutDialog(
-                          context,
-                          () {
-                            Navigator.pop(context);
-                            ProfileViewmodel.get(context).logout();
-                          },
-                        );
-                      },
-                child: state.isLogoutLoading
-                    ? const CircularProgressIndicator()
-                    : const Text('Logout'),
-              ),
-            ],
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'You signed in as: Anonymous',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20),
+                ),
+                const SizedBox(height: AppMetrices.heightSpace2),
+                ElevatedButton(
+                  onPressed: state.isLogoutLoading
+                      ? null
+                      : () {
+                          showLogoutDialog(
+                            context,
+                            () {
+                              Navigator.pop(context);
+                              ProfileViewmodel.get(context).logout();
+                            },
+                          );
+                        },
+                  child: state.isLogoutLoading
+                      ? const CircularProgressIndicator()
+                      : const Text('Logout'),
+                ),
+              ],
+            ),
           ),
         );
       },

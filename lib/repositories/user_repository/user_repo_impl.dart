@@ -27,28 +27,18 @@ class UserRepoImpl implements UserRepoInterface {
 
   @override
   Future<ResultHandler<bool, ServerFailure>> uploadMbi({
-    required double height,
-    required double weight,
-    required double mbi,
-    required int age,
+    required BmiModel bmiModel,
   }) async {
     try {
       var connectivityResult = await Connectivity().checkConnectivity();
       if (connectivityResult.contains(ConnectivityResult.wifi) ||
           connectivityResult.contains(ConnectivityResult.mobile)) {
-        BmiModel newBmi = BmiModel(
-          height: height,
-          weight: weight,
-          age: age,
-          bmiResult: mbi,
-          time: DateTime.now(),
-        );
         await FirebaseFirestore.instance
             .collection(FirebaseConstants.usersCollection)
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .collection(FirebaseConstants.bmiEntries)
             .add(
-              newBmi.toJson(),
+              bmiModel.toJson(),
             );
         return const ResultHandler.success(data: true);
       } else {
@@ -69,45 +59,6 @@ class UserRepoImpl implements UserRepoInterface {
           connectivityResult.contains(ConnectivityResult.mobile)) {
         return ResultHandler.success(
             data: FirebaseAuth.instance.currentUser == null ? false : true);
-      } else {
-        return ResultHandler.failure(
-            error: ServerFailure('No internet connection, please try again'));
-      }
-    } catch (e) {
-      return ResultHandler.failure(error: ServerFailure(e.toString()));
-    }
-  }
-
-  @override
-  Future<ResultHandler<List<BmiModel>, ServerFailure>> fetchEntriesPerPage({
-    required int entriesPerPage,
-    DocumentSnapshot? lastDocumentSnapshot,
-  }) async {
-    try {
-      var connectivityResult = await Connectivity().checkConnectivity();
-      if (connectivityResult.contains(ConnectivityResult.wifi) ||
-          connectivityResult.contains(ConnectivityResult.mobile)) {
-        var query = FirebaseFirestore.instance
-            .collection(FirebaseConstants.usersCollection)
-            .doc(FirebaseAuth.instance.currentUser!.uid)
-            .collection(FirebaseConstants.bmiEntries)
-            .orderBy(FirebaseConstants.timeKey, descending: true)
-            .limit(entriesPerPage);
-        QuerySnapshot<Map<String, dynamic>> snapshot;
-        if (lastDocumentSnapshot == null) {
-          snapshot = await query.get();
-          lastDocumentSnapshot = snapshot.docs.last;
-        } else {
-          snapshot = await query.startAfterDocument(lastDocumentSnapshot).get();
-          lastDocumentSnapshot = snapshot.docs.last;
-        }
-        return ResultHandler.success(
-          data: snapshot.docs
-              .map<BmiModel>(
-                (e) => BmiModel.fromJson(e.data()),
-              )
-              .toList(),
-        );
       } else {
         return ResultHandler.failure(
             error: ServerFailure('No internet connection, please try again'));

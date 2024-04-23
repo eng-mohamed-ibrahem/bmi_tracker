@@ -3,14 +3,38 @@ import 'package:bmi_tracker/model/bmi_model/bmi_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class BmiEntryItem extends StatelessWidget {
-  const BmiEntryItem({super.key, required this.bmiModel});
+class BmiEntryItem extends StatefulWidget {
+  const BmiEntryItem(
+      {super.key,
+      required this.bmiModel,
+      required this.onEdit,
+      required this.onDelete});
   final BmiModel bmiModel;
+  final void Function() onEdit;
+  final void Function() onDelete;
 
+  @override
+  State<BmiEntryItem> createState() => _BmiEntryItemState();
+}
+
+class _BmiEntryItemState extends State<BmiEntryItem> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            IconButton(
+              onPressed: widget.onEdit,
+              icon: const Icon(Icons.edit),
+            ),
+            IconButton(
+              onPressed: widget.onDelete,
+              icon: const Icon(Icons.delete, color: Colors.red),
+            ),
+          ],
+        ),
         Row(
           children: [
             const Expanded(
@@ -22,7 +46,8 @@ class BmiEntryItem extends StatelessWidget {
             Expanded(
               flex: 5,
               child: Container(
-                  color: Colors.grey[100], child: Text('${bmiModel.height}')),
+                  color: Colors.grey[100],
+                  child: Text('${widget.bmiModel.height}')),
             )
           ],
         ),
@@ -40,7 +65,8 @@ class BmiEntryItem extends StatelessWidget {
             Expanded(
               flex: 5,
               child: Container(
-                  color: Colors.grey[100], child: Text('${bmiModel.weight}')),
+                  color: Colors.grey[100],
+                  child: Text('${widget.bmiModel.weight}')),
             )
           ],
         ),
@@ -63,7 +89,7 @@ class BmiEntryItem extends StatelessWidget {
               flex: 5,
               child: Container(
                 color: Colors.grey[100],
-                child: Text('${bmiModel.bmiResult}'),
+                child: Text('${widget.bmiModel.bmiResult}'),
               ),
             )
           ],
@@ -82,7 +108,8 @@ class BmiEntryItem extends StatelessWidget {
             Expanded(
               flex: 5,
               child: Container(
-                  color: Colors.grey[100], child: Text('${bmiModel.age}')),
+                  color: Colors.grey[100],
+                  child: Text('${widget.bmiModel.age}')),
             )
           ],
         ),
@@ -107,15 +134,12 @@ class BmiEntryItem extends StatelessWidget {
                 color: Colors.grey[100],
                 child: Text(
                   (DateFormat('EEEE, MMM d, yyyy – kk:mm a')
-                      .format(bmiModel.time)),
+                      .format(widget.bmiModel.time)),
                 ),
               ),
             )
           ],
         ),
-        const SizedBox(
-          height: AppMetrices.heightSpace,
-        )
       ],
     );
   }
