@@ -21,10 +21,14 @@ class RootApp extends StatelessWidget {
           create: (context) => BmiSubmitViewmodel(userRepo: kUserRepo),
         ),
         BlocProvider<BmiEntriesViewmodel>(
-          create: (context) => BmiEntriesViewmodel(),
+          create: (context) => BmiEntriesViewmodel(
+            userRepo: kUserRepo,
+          ),
         ),
-        BlocProvider<ProfileViewmodelCubit>(
-          create: (context) => ProfileViewmodelCubit(),
+        BlocProvider<ProfileViewmodel>(
+          create: (context) => ProfileViewmodel(
+            userRepo: kUserRepo,
+          ),
         )
       ],
       child: const MaterialApp(

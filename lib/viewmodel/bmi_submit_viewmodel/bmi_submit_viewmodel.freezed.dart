@@ -19,35 +19,37 @@ mixin _$BmiSubmitViewModelState {
   bool get isInitialized => throw _privateConstructorUsedError;
   bool get isBmiCalculated => throw _privateConstructorUsedError;
   double? get bmiResult => throw _privateConstructorUsedError;
+  bool get isBmiUploading => throw _privateConstructorUsedError;
   bool get isBmiUploaded => throw _privateConstructorUsedError;
   bool get isBmiUploadedError => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $HomeViewModelStateCopyWith<BmiSubmitViewModelState> get copyWith =>
+  $BmiSubmitViewModelStateCopyWith<BmiSubmitViewModelState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $HomeViewModelStateCopyWith<$Res> {
-  factory $HomeViewModelStateCopyWith(BmiSubmitViewModelState value,
+abstract class $BmiSubmitViewModelStateCopyWith<$Res> {
+  factory $BmiSubmitViewModelStateCopyWith(BmiSubmitViewModelState value,
           $Res Function(BmiSubmitViewModelState) then) =
-      _$HomeViewModelStateCopyWithImpl<$Res, BmiSubmitViewModelState>;
+      _$BmiSubmitViewModelStateCopyWithImpl<$Res, BmiSubmitViewModelState>;
   @useResult
   $Res call(
       {bool isInitialized,
       bool isBmiCalculated,
       double? bmiResult,
+      bool isBmiUploading,
       bool isBmiUploaded,
       bool isBmiUploadedError,
       String? error});
 }
 
 /// @nodoc
-class _$HomeViewModelStateCopyWithImpl<$Res,
+class _$BmiSubmitViewModelStateCopyWithImpl<$Res,
         $Val extends BmiSubmitViewModelState>
-    implements $HomeViewModelStateCopyWith<$Res> {
-  _$HomeViewModelStateCopyWithImpl(this._value, this._then);
+    implements $BmiSubmitViewModelStateCopyWith<$Res> {
+  _$BmiSubmitViewModelStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -60,6 +62,7 @@ class _$HomeViewModelStateCopyWithImpl<$Res,
     Object? isInitialized = null,
     Object? isBmiCalculated = null,
     Object? bmiResult = freezed,
+    Object? isBmiUploading = null,
     Object? isBmiUploaded = null,
     Object? isBmiUploadedError = null,
     Object? error = freezed,
@@ -77,6 +80,10 @@ class _$HomeViewModelStateCopyWithImpl<$Res,
           ? _value.bmiResult
           : bmiResult // ignore: cast_nullable_to_non_nullable
               as double?,
+      isBmiUploading: null == isBmiUploading
+          ? _value.isBmiUploading
+          : isBmiUploading // ignore: cast_nullable_to_non_nullable
+              as bool,
       isBmiUploaded: null == isBmiUploaded
           ? _value.isBmiUploaded
           : isBmiUploaded // ignore: cast_nullable_to_non_nullable
@@ -95,7 +102,7 @@ class _$HomeViewModelStateCopyWithImpl<$Res,
 
 /// @nodoc
 abstract class _$$HomeViewModelStateImplCopyWith<$Res>
-    implements $HomeViewModelStateCopyWith<$Res> {
+    implements $BmiSubmitViewModelStateCopyWith<$Res> {
   factory _$$HomeViewModelStateImplCopyWith(_$HomeViewModelStateImpl value,
           $Res Function(_$HomeViewModelStateImpl) then) =
       __$$HomeViewModelStateImplCopyWithImpl<$Res>;
@@ -105,6 +112,7 @@ abstract class _$$HomeViewModelStateImplCopyWith<$Res>
       {bool isInitialized,
       bool isBmiCalculated,
       double? bmiResult,
+      bool isBmiUploading,
       bool isBmiUploaded,
       bool isBmiUploadedError,
       String? error});
@@ -112,7 +120,8 @@ abstract class _$$HomeViewModelStateImplCopyWith<$Res>
 
 /// @nodoc
 class __$$HomeViewModelStateImplCopyWithImpl<$Res>
-    extends _$HomeViewModelStateCopyWithImpl<$Res, _$HomeViewModelStateImpl>
+    extends _$BmiSubmitViewModelStateCopyWithImpl<$Res,
+        _$HomeViewModelStateImpl>
     implements _$$HomeViewModelStateImplCopyWith<$Res> {
   __$$HomeViewModelStateImplCopyWithImpl(_$HomeViewModelStateImpl _value,
       $Res Function(_$HomeViewModelStateImpl) _then)
@@ -124,6 +133,7 @@ class __$$HomeViewModelStateImplCopyWithImpl<$Res>
     Object? isInitialized = null,
     Object? isBmiCalculated = null,
     Object? bmiResult = freezed,
+    Object? isBmiUploading = null,
     Object? isBmiUploaded = null,
     Object? isBmiUploadedError = null,
     Object? error = freezed,
@@ -141,6 +151,10 @@ class __$$HomeViewModelStateImplCopyWithImpl<$Res>
           ? _value.bmiResult
           : bmiResult // ignore: cast_nullable_to_non_nullable
               as double?,
+      isBmiUploading: null == isBmiUploading
+          ? _value.isBmiUploading
+          : isBmiUploading // ignore: cast_nullable_to_non_nullable
+              as bool,
       isBmiUploaded: null == isBmiUploaded
           ? _value.isBmiUploaded
           : isBmiUploaded // ignore: cast_nullable_to_non_nullable
@@ -164,6 +178,7 @@ class _$HomeViewModelStateImpl implements _HomeViewModelState {
       {this.isInitialized = false,
       this.isBmiCalculated = false,
       this.bmiResult = null,
+      this.isBmiUploading = false,
       this.isBmiUploaded = false,
       this.isBmiUploadedError = false,
       this.error = null});
@@ -179,6 +194,9 @@ class _$HomeViewModelStateImpl implements _HomeViewModelState {
   final double? bmiResult;
   @override
   @JsonKey()
+  final bool isBmiUploading;
+  @override
+  @JsonKey()
   final bool isBmiUploaded;
   @override
   @JsonKey()
@@ -189,7 +207,7 @@ class _$HomeViewModelStateImpl implements _HomeViewModelState {
 
   @override
   String toString() {
-    return 'BmiSubmitViewModelState(isInitialized: $isInitialized, isBmiCalculated: $isBmiCalculated, bmiResult: $bmiResult, isBmiUploaded: $isBmiUploaded, isBmiUploadedError: $isBmiUploadedError, error: $error)';
+    return 'BmiSubmitViewModelState(isInitialized: $isInitialized, isBmiCalculated: $isBmiCalculated, bmiResult: $bmiResult, isBmiUploading: $isBmiUploading, isBmiUploaded: $isBmiUploaded, isBmiUploadedError: $isBmiUploadedError, error: $error)';
   }
 
   @override
@@ -203,6 +221,8 @@ class _$HomeViewModelStateImpl implements _HomeViewModelState {
                 other.isBmiCalculated == isBmiCalculated) &&
             (identical(other.bmiResult, bmiResult) ||
                 other.bmiResult == bmiResult) &&
+            (identical(other.isBmiUploading, isBmiUploading) ||
+                other.isBmiUploading == isBmiUploading) &&
             (identical(other.isBmiUploaded, isBmiUploaded) ||
                 other.isBmiUploaded == isBmiUploaded) &&
             (identical(other.isBmiUploadedError, isBmiUploadedError) ||
@@ -212,7 +232,7 @@ class _$HomeViewModelStateImpl implements _HomeViewModelState {
 
   @override
   int get hashCode => Object.hash(runtimeType, isInitialized, isBmiCalculated,
-      bmiResult, isBmiUploaded, isBmiUploadedError, error);
+      bmiResult, isBmiUploading, isBmiUploaded, isBmiUploadedError, error);
 
   @JsonKey(ignore: true)
   @override
@@ -227,6 +247,7 @@ abstract class _HomeViewModelState implements BmiSubmitViewModelState {
       {final bool isInitialized,
       final bool isBmiCalculated,
       final double? bmiResult,
+      final bool isBmiUploading,
       final bool isBmiUploaded,
       final bool isBmiUploadedError,
       final String? error}) = _$HomeViewModelStateImpl;
@@ -237,6 +258,8 @@ abstract class _HomeViewModelState implements BmiSubmitViewModelState {
   bool get isBmiCalculated;
   @override
   double? get bmiResult;
+  @override
+  bool get isBmiUploading;
   @override
   bool get isBmiUploaded;
   @override

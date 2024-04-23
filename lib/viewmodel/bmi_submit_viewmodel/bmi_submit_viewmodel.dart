@@ -32,12 +32,18 @@ class BmiSubmitViewmodel extends Cubit<BmiSubmitViewModelState> {
       required double weight,
       required double mbi,
       required int age}) async {
+    emit(
+      state.copyWith(
+        isBmiUploading: true,
+      ),
+    );
     var result = await userRepo.uploadMbi(
         height: height, weight: weight, mbi: mbi, age: age);
     result.when(
       success: (uploaded) {
         emit(
           state.copyWith(
+            isBmiUploading: false,
             isBmiUploaded: uploaded,
           ),
         );
@@ -45,7 +51,7 @@ class BmiSubmitViewmodel extends Cubit<BmiSubmitViewModelState> {
       failure: (failure) {
         emit(
           state.copyWith(
-            isBmiUploaded: false,
+            isBmiUploading: false,
             isBmiUploadedError: true,
             error: failure.message,
           ),
@@ -58,6 +64,8 @@ class BmiSubmitViewmodel extends Cubit<BmiSubmitViewModelState> {
     return state.copyWith(
       isInitialized: false,
       isBmiCalculated: false,
+      bmiResult: null,
+      isBmiUploading: false,
       isBmiUploaded: false,
       isBmiUploadedError: false,
       error: null,

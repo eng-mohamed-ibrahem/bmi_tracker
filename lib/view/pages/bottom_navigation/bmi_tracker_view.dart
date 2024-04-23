@@ -132,6 +132,15 @@ class _MBITrackerState extends State<MBITracker> {
                           width: AppMetrices.widthSpace,
                         ),
                         Text(state.bmiResult!.toStringAsFixed(2)),
+                        const SizedBox(
+                          width: AppMetrices.widthSpace,
+                        ),
+                        state.isBmiUploading
+                            ? const Text(
+                                'Upload BMI...',
+                                style: TextStyle(color: Colors.green),
+                              )
+                            : const SizedBox(),
                       ],
                     )
                   : const SizedBox(),
@@ -147,7 +156,8 @@ class _MBITrackerState extends State<MBITracker> {
                         weight: double.parse(weightController.text),
                         age: int.parse(ageController.text),
                       );
-                  // then upload data to firebase
+                  heightController.clear();
+                  weightController.clear();
                 }
               },
               label: const Text('Calculate BMI'),

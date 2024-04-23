@@ -17,6 +17,10 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ProfileViewmodelState {
   bool get isInitialized => throw _privateConstructorUsedError;
+  bool get isLogoutLoading => throw _privateConstructorUsedError;
+  bool get isLogoutSuccess => throw _privateConstructorUsedError;
+  bool get isLogoutError => throw _privateConstructorUsedError;
+  String? get error => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ProfileViewmodelStateCopyWith<ProfileViewmodelState> get copyWith =>
@@ -29,7 +33,12 @@ abstract class $ProfileViewmodelStateCopyWith<$Res> {
           $Res Function(ProfileViewmodelState) then) =
       _$ProfileViewmodelStateCopyWithImpl<$Res, ProfileViewmodelState>;
   @useResult
-  $Res call({bool isInitialized});
+  $Res call(
+      {bool isInitialized,
+      bool isLogoutLoading,
+      bool isLogoutSuccess,
+      bool isLogoutError,
+      String? error});
 }
 
 /// @nodoc
@@ -47,12 +56,32 @@ class _$ProfileViewmodelStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? isInitialized = null,
+    Object? isLogoutLoading = null,
+    Object? isLogoutSuccess = null,
+    Object? isLogoutError = null,
+    Object? error = freezed,
   }) {
     return _then(_value.copyWith(
       isInitialized: null == isInitialized
           ? _value.isInitialized
           : isInitialized // ignore: cast_nullable_to_non_nullable
               as bool,
+      isLogoutLoading: null == isLogoutLoading
+          ? _value.isLogoutLoading
+          : isLogoutLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLogoutSuccess: null == isLogoutSuccess
+          ? _value.isLogoutSuccess
+          : isLogoutSuccess // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLogoutError: null == isLogoutError
+          ? _value.isLogoutError
+          : isLogoutError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -66,7 +95,12 @@ abstract class _$$ProfileViewmodelStateImplCopyWith<$Res>
       __$$ProfileViewmodelStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isInitialized});
+  $Res call(
+      {bool isInitialized,
+      bool isLogoutLoading,
+      bool isLogoutSuccess,
+      bool isLogoutError,
+      String? error});
 }
 
 /// @nodoc
@@ -82,12 +116,32 @@ class __$$ProfileViewmodelStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isInitialized = null,
+    Object? isLogoutLoading = null,
+    Object? isLogoutSuccess = null,
+    Object? isLogoutError = null,
+    Object? error = freezed,
   }) {
     return _then(_$ProfileViewmodelStateImpl(
       isInitialized: null == isInitialized
           ? _value.isInitialized
           : isInitialized // ignore: cast_nullable_to_non_nullable
               as bool,
+      isLogoutLoading: null == isLogoutLoading
+          ? _value.isLogoutLoading
+          : isLogoutLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLogoutSuccess: null == isLogoutSuccess
+          ? _value.isLogoutSuccess
+          : isLogoutSuccess // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLogoutError: null == isLogoutError
+          ? _value.isLogoutError
+          : isLogoutError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -95,15 +149,32 @@ class __$$ProfileViewmodelStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ProfileViewmodelStateImpl implements _ProfileViewmodelState {
-  const _$ProfileViewmodelStateImpl({this.isInitialized = false});
+  const _$ProfileViewmodelStateImpl(
+      {this.isInitialized = false,
+      this.isLogoutLoading = false,
+      this.isLogoutSuccess = false,
+      this.isLogoutError = false,
+      this.error = null});
 
   @override
   @JsonKey()
   final bool isInitialized;
+  @override
+  @JsonKey()
+  final bool isLogoutLoading;
+  @override
+  @JsonKey()
+  final bool isLogoutSuccess;
+  @override
+  @JsonKey()
+  final bool isLogoutError;
+  @override
+  @JsonKey()
+  final String? error;
 
   @override
   String toString() {
-    return 'ProfileViewmodelState(isInitialized: $isInitialized)';
+    return 'ProfileViewmodelState(isInitialized: $isInitialized, isLogoutLoading: $isLogoutLoading, isLogoutSuccess: $isLogoutSuccess, isLogoutError: $isLogoutError, error: $error)';
   }
 
   @override
@@ -112,11 +183,19 @@ class _$ProfileViewmodelStateImpl implements _ProfileViewmodelState {
         (other.runtimeType == runtimeType &&
             other is _$ProfileViewmodelStateImpl &&
             (identical(other.isInitialized, isInitialized) ||
-                other.isInitialized == isInitialized));
+                other.isInitialized == isInitialized) &&
+            (identical(other.isLogoutLoading, isLogoutLoading) ||
+                other.isLogoutLoading == isLogoutLoading) &&
+            (identical(other.isLogoutSuccess, isLogoutSuccess) ||
+                other.isLogoutSuccess == isLogoutSuccess) &&
+            (identical(other.isLogoutError, isLogoutError) ||
+                other.isLogoutError == isLogoutError) &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isInitialized);
+  int get hashCode => Object.hash(runtimeType, isInitialized, isLogoutLoading,
+      isLogoutSuccess, isLogoutError, error);
 
   @JsonKey(ignore: true)
   @override
@@ -127,11 +206,23 @@ class _$ProfileViewmodelStateImpl implements _ProfileViewmodelState {
 }
 
 abstract class _ProfileViewmodelState implements ProfileViewmodelState {
-  const factory _ProfileViewmodelState({final bool isInitialized}) =
-      _$ProfileViewmodelStateImpl;
+  const factory _ProfileViewmodelState(
+      {final bool isInitialized,
+      final bool isLogoutLoading,
+      final bool isLogoutSuccess,
+      final bool isLogoutError,
+      final String? error}) = _$ProfileViewmodelStateImpl;
 
   @override
   bool get isInitialized;
+  @override
+  bool get isLogoutLoading;
+  @override
+  bool get isLogoutSuccess;
+  @override
+  bool get isLogoutError;
+  @override
+  String? get error;
   @override
   @JsonKey(ignore: true)
   _$$ProfileViewmodelStateImplCopyWith<_$ProfileViewmodelStateImpl>

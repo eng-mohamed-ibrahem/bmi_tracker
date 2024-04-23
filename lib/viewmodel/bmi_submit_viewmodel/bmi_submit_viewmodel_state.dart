@@ -6,6 +6,7 @@ class BmiSubmitViewModelState with _$BmiSubmitViewModelState {
     @Default(false) bool isInitialized,
     @Default(false) bool isBmiCalculated,
     @Default(null) double? bmiResult,
+    @Default(false) bool isBmiUploading,
     @Default(false) bool isBmiUploaded,
     @Default(false) bool isBmiUploadedError,
     @Default(null) String? error,

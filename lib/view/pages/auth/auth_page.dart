@@ -11,27 +11,28 @@ class AuthPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Welcome to BMI Tracker',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 20),
+        ),
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(AppMetrices.widthSpace2),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text(
-              'Welcome to BMI Tracker',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20),
-            ),
             const SizedBox(height: AppMetrices.heightSpace),
             const Text(
               'Please Sign in to save your data in the cloud',
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: AppMetrices.heightSpace3),
+            const SizedBox(height: AppMetrices.heightSpace),
             BlocConsumer<AuthViewmodel, AuthViewModelState>(
               listener: (context, state) {
                 if (state.isSinginSuccess) {
-                  showSnackbar(context, message: 'Sign in successful');
+                  showSnackbar(context, message: 'Sign in successfully');
                   Navigator.of(context)
                       .pushReplacementNamed(GenerateRouter.home);
                 }

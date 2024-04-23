@@ -29,7 +29,6 @@ class AuthViewmodel extends Cubit<AuthViewModelState> {
         emit(
           state.copyWith(
             isSigninLoading: false,
-            isSinginSuccess: false,
             isSinginError: true,
             error: failure.message,
           ),

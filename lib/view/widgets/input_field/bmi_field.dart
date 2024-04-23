@@ -1,4 +1,3 @@
-import 'package:bmi_tracker/core/constant/app_metrices.dart';
 import 'package:bmi_tracker/view/widgets/input_field/input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,9 +28,6 @@ class BMIField extends StatelessWidget {
           child: Text(
             title,
           ),
-        ),
-        const SizedBox(
-          width: AppMetrices.widthSpace,
         ),
         Expanded(
           flex: 4,
