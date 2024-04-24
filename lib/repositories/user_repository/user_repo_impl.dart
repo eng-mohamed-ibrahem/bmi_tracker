@@ -67,4 +67,52 @@ class UserRepoImpl implements UserRepoInterface {
       return ResultHandler.failure(error: ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<ResultHandler<BmiModel, ServerFailure>> updateBmiEntry({
+    required String bmiEntryReference,
+    required BmiModel updatedBmiModel,
+  }) async {
+    try {
+      var connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult.contains(ConnectivityResult.wifi) ||
+          connectivityResult.contains(ConnectivityResult.mobile)) {
+        await FirebaseFirestore.instance
+            .collection(FirebaseConstants.usersCollection)
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection(FirebaseConstants.bmiEntries)
+            .doc(bmiEntryReference)
+            .update(updatedBmiModel.toJson());
+        return ResultHandler.success(data: updatedBmiModel);
+      } else {
+        return ResultHandler.failure(
+            error: ServerFailure('No internet connection, please try again'));
+      }
+    } catch (e) {
+      return ResultHandler.failure(error: ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<ResultHandler<bool, ServerFailure>> deleteBmiEntry(
+      {required String bmiEntryReference}) async {
+    try {
+      var connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult.contains(ConnectivityResult.wifi) ||
+          connectivityResult.contains(ConnectivityResult.mobile)) {
+        await FirebaseFirestore.instance
+            .collection(FirebaseConstants.usersCollection)
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection(FirebaseConstants.bmiEntries)
+            .doc(bmiEntryReference)
+            .delete();
+        return const ResultHandler.success(data: true);
+      } else {
+        return ResultHandler.failure(
+            error: ServerFailure('No internet connection, please try again'));
+      }
+    } catch (e) {
+      return ResultHandler.failure(error: ServerFailure(e.toString()));
+    }
+  }
 }

@@ -42,6 +42,7 @@ showDeleteDialog(BuildContext context, {required void Function() onDelete}) {
         title: const Text('Delete'),
         content: const Text(
           'Are you sure you want to delete this entry?',
+          textAlign: TextAlign.center,
         ),
         actions: [
           TextButton(
@@ -64,17 +65,18 @@ showDeleteDialog(BuildContext context, {required void Function() onDelete}) {
 }
 
 // show dialog for editting bmi item
-showEditDialog(
+Future<({String height, String weight})?> showEditDialog(
   BuildContext context, {
-  required TextEditingController hightController,
-  required TextEditingController weightController,
-  required void Function() onEdit,
-}) {
-  showDialog(
+  void Function()? onEdit,
+}) async {
+  return await showDialog<({String height, String weight})?>(
     context: context,
     builder: (context) {
+      var hight = '';
+      var weight = '';
       return AlertDialog(
         scrollable: true,
+        insetPadding: const EdgeInsets.all(5),
         title: const Text('Edit'),
         content: Column(
           children: [
@@ -89,7 +91,9 @@ showEditDialog(
                 Expanded(
                   flex: 5,
                   child: InputField(
-                    controller: hightController,
+                    onChanged: (value) {
+                      hight = value;
+                    },
                     validator: (value) {
                       if (value!.isNotEmpty && double.parse(value) > 300) {
                         return 'Please enter a valid height';
@@ -119,7 +123,9 @@ showEditDialog(
                 Expanded(
                   flex: 5,
                   child: InputField(
-                    controller: weightController,
+                    onChanged: (value) {
+                      weight = value;
+                    },
                     validator: (value) {
                       if (value!.isNotEmpty && double.parse(value) > 300) {
                         return 'Please enter a valid weight';
@@ -149,9 +155,15 @@ showEditDialog(
           ),
           TextButton(
             onPressed: () {
-              onEdit.call();
-              hightController.dispose();
-              weightController.dispose();
+              onEdit?.call();
+              if (hight.isNotEmpty || weight.isNotEmpty) {
+                Navigator.pop(
+                  context,
+                  (height: hight, weight: weight),
+                );
+              } else {
+                Navigator.pop(context);
+              }
             },
             child: const Text(
               'Edit',

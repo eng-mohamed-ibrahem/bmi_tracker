@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 class InputField extends StatelessWidget {
   const InputField({
     super.key,
-    required this.controller,
+    this.controller,
     this.hintText,
     this.validator,
     this.onChanged,
@@ -14,7 +14,7 @@ class InputField extends StatelessWidget {
     this.inputFormatters,
     this.textInputAction,
   });
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String? hintText;
   final Widget? suffixIcon;
   final TextInputType? keyboardType;

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bmi_tracker/core/utils/dialog/helper_dialog.dart';
 import 'package:bmi_tracker/core/utils/snackbar/handler_snackbar.dart';
 import 'package:bmi_tracker/model/bmi_model/bmi_model.dart';
@@ -30,8 +28,6 @@ class _BMIEntriesState extends State<BMIEntries> {
     context.read<BmiEntriesViewmodel>().bmiStream();
   }
 
-  var loadNextPage = false;
-
   @override
   void dispose() {
     controller.dispose();
@@ -45,12 +41,26 @@ class _BMIEntriesState extends State<BMIEntries> {
         if (state.isStreamError) {
           showSnackbar(context, message: state.error!);
         }
+        if (state.isBmiEntryUpdatededError) {
+          showSnackbar(context, message: state.error!);
+        }
+        if (state.isBmiEntryUpdated) {
+          showSnackbar(context, message: 'Entry updated successfully');
+        }
+        if (state.isBmiEntryUpdating) {
+          showSnackbar(context, message: 'Entry updating...');
+        }
+        if (state.isBmiEntryDeleted) {
+          showSnackbar(context, message: 'Entry deleted successfully');
+        }
+        if (state.isBmiEntryDeleting) {
+          showSnackbar(context, message: 'Entry deleting...');
+        }
       },
       builder: (context, state) {
         if (state.isStreamInitialized == false) {
           return const Center(child: CircularProgressIndicator());
         }
-        log('loadNextPage = ${state.loadNextPage}');
         return Column(
           children: [
             Expanded(
@@ -59,7 +69,7 @@ class _BMIEntriesState extends State<BMIEntries> {
                 builder: (context, snapshot) {
                   List<BmiModel> entries = [];
 
-                  // get the previous data stream if loading for second time
+                  /// get the previous data stream if loading for second time
                   if (snapshot.connectionState == ConnectionState.waiting &&
                       snapshot.hasData) {
                     entries = snapshot.requireData.docs
@@ -74,68 +84,75 @@ class _BMIEntriesState extends State<BMIEntries> {
                           (e) => BmiModel.fromJson(e.data()),
                         )
                         .toList();
-                    loadNextPage = false;
+                    context.read<BmiEntriesViewmodel>().setLastDocumentSnapshot(
+                        lastDocumentSnapshot: snapshot.data!.docs.last);
                   }
                   return entries.isEmpty
                       ? const Center(child: Text('No entries yet'))
                       : ListView.separated(
                           controller: controller,
-                          itemCount: entries.length,
+                          itemCount: entries.length + 1,
+                          physics: const BouncingScrollPhysics(),
                           itemBuilder: (context, index) {
-                            return BmiEntryItem(
-                              bmiModel: entries[index],
-                              onEdit: () {
-                                var hightController = TextEditingController();
-                                var weightController = TextEditingController();
-                                showEditDialog(context,
-                                    hightController: hightController,
-                                    weightController: weightController,
-                                    onEdit: () {
-                                  var weight = weightController.text.isEmpty
-                                      ? entries[index].weight
-                                      : double.parse(
-                                          weightController.text,
-                                        );
-                                  var height = hightController.text.isEmpty
-                                      ? entries[index].height
-                                      : double.parse(
-                                          hightController.text,
-                                        );
-                                  var newEntry = entries[index].copyWith(
-                                    height: height,
-                                    weight: weight,
-                                    bmiResult: hightController.text.isEmpty &&
-                                            weightController.text.isEmpty
-                                        ? entries[index].bmiResult
-                                        : double.parse(
-                                            (weight / (height * height / 10000))
-                                                .toStringAsFixed(2),
-                                          ),
+                            if (index < entries.length) {
+                              return BmiEntryItem(
+                                bmiModel: entries[index],
+                                onEdit: () async {
+                                  await showEditDialog(context, onEdit: () {})
+                                      .then(
+                                    (updatedData) {
+                                      if (updatedData != null) {
+                                        var weight = updatedData.weight.isEmpty
+                                            ? entries[index].weight
+                                            : double.parse(updatedData.weight);
+                                        var height = updatedData.height.isEmpty
+                                            ? entries[index].height
+                                            : double.parse(
+                                                updatedData.height,
+                                              );
+                                        context
+                                            .read<BmiEntriesViewmodel>()
+                                            .updateBmiEntry(
+                                              bmiEntryReference: snapshot.data!
+                                                  .docs[index].reference.id,
+                                              bmiModel: entries[index],
+                                              height: height,
+                                              weight: weight,
+                                            );
+                                      }
+                                    },
                                   );
-                                  snapshot.data!.docs[index].reference
-                                      .update(newEntry.toJson());
-                                  Navigator.pop(context);
-                                });
-                              },
-                              onDelete: () {
-                                showDeleteDialog(
-                                  context,
-                                  onDelete: () {
-                                    snapshot.data!.docs[index].reference
-                                        .delete();
-                                    Navigator.pop(context);
-                                  },
-                                );
-                              },
-                            );
+                                },
+                                onDelete: () {
+                                  showDeleteDialog(
+                                    context,
+                                    onDelete: () {
+                                      context
+                                          .read<BmiEntriesViewmodel>()
+                                          .deleteBmiEntry(
+                                              bmiEntryReference: snapshot.data!
+                                                  .docs[index].reference.id);
+                                      Navigator.pop(context);
+                                    },
+                                  );
+                                },
+                              );
+                            } else {
+                              if (state.loadNextPage) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              } else {
+                                return const SizedBox();
+                              }
+                            }
                           },
                           separatorBuilder: (context, index) => const Divider(),
                         );
                 },
               ),
             ),
-            if (state.loadNextPage)
-              const Center(child: CircularProgressIndicator()),
+            // if (state.loadNextPage)
+            //   const Center(child: CircularProgressIndicator()),
           ],
         );
       },

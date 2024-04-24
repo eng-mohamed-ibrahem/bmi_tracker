@@ -8,4 +8,13 @@ abstract class UserRepoInterface {
   Future<ResultHandler<bool, ServerFailure>> uploadMbi({
     required BmiModel bmiModel,
   });
+
+  Future<ResultHandler<BmiModel, ServerFailure>> updateBmiEntry({
+    required String bmiEntryReference,
+    required BmiModel updatedBmiModel,
+  });
+
+  Future<ResultHandler<bool, ServerFailure>> deleteBmiEntry({
+    required String bmiEntryReference,
+  });
 }
