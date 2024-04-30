@@ -1,16 +1,18 @@
 part of 'bmi_entries_viewmodel.dart';
 
-@Freezed(makeCollectionsUnmodifiable: false)
+@freezed
 class BmiEntriesViewmodelState with _$BmiEntriesViewmodelState {
+  const BmiEntriesViewmodelState._();
   const factory BmiEntriesViewmodelState({
     @Default(true) bool isInitialized,
     @Default(10) int entriesCountPerPage,
     @Default(0) int countLoadedEntries,
-    @Default(10) int currentInRangEntries,
+    @Default(10) int currentLimit,
     @Default(false) bool loadNextPage,
     @Default(false) bool isStreamInitialized,
     @Default(false) bool isStreamError,
-    @Default(null) Stream<QuerySnapshot<Map<String, dynamic>>>? bmiStream,
+    required StreamController<QuerySnapshot<Map<String, dynamic>>>
+        bmiStreamController,
     @Default(null) DocumentSnapshot? lastDocumentSnapshot,
     @Default(false) bool isBmiEntryUpdating,
     @Default(false) bool isBmiEntryUpdated,

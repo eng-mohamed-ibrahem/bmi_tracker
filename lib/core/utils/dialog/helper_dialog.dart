@@ -72,8 +72,8 @@ Future<({String height, String weight})?> showEditDialog(
   return await showDialog<({String height, String weight})?>(
     context: context,
     builder: (context) {
-      var hight = '';
-      var weight = '';
+      var hight = '0';
+      var weight = '0';
       return AlertDialog(
         scrollable: true,
         insetPadding: const EdgeInsets.all(5),
@@ -156,14 +156,13 @@ Future<({String height, String weight})?> showEditDialog(
           TextButton(
             onPressed: () {
               onEdit?.call();
-              if (hight.isNotEmpty || weight.isNotEmpty) {
-                Navigator.pop(
-                  context,
-                  (height: hight, weight: weight),
-                );
-              } else {
-                Navigator.pop(context);
-              }
+              Navigator.pop(
+                context,
+                (
+                  height: hight.isEmpty ? '0' : hight,
+                  weight: weight.isEmpty ? '0' : weight
+                ),
+              );
             },
             child: const Text(
               'Edit',

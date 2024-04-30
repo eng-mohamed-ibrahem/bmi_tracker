@@ -1,19 +1,18 @@
 import 'package:bmi_tracker/core/constant/firebase_constants.dart';
 import 'package:bmi_tracker/core/error/failure.dart';
 import 'package:bmi_tracker/core/handle_result/result.dart';
+import 'package:bmi_tracker/core/utils/internet_connection/internet_connection.dart';
 import 'package:bmi_tracker/model/bmi_model/bmi_model.dart';
 import 'package:bmi_tracker/repositories/user_repository/user_repo_interface.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserRepoImpl implements UserRepoInterface {
   @override
   Future<ResultHandler<bool, ServerFailure>> logout() async {
     try {
-      var connectivityResult = await Connectivity().checkConnectivity();
-      if (connectivityResult.contains(ConnectivityResult.wifi) ||
-          connectivityResult.contains(ConnectivityResult.mobile)) {
+      var connected = await InternetConnection.isConnected();
+      if (connected) {
         await FirebaseAuth.instance.signOut();
         return const ResultHandler.success(data: true);
       } else {
@@ -30,9 +29,8 @@ class UserRepoImpl implements UserRepoInterface {
     required BmiModel bmiModel,
   }) async {
     try {
-      var connectivityResult = await Connectivity().checkConnectivity();
-      if (connectivityResult.contains(ConnectivityResult.wifi) ||
-          connectivityResult.contains(ConnectivityResult.mobile)) {
+      var connected = await InternetConnection.isConnected();
+      if (connected) {
         await FirebaseFirestore.instance
             .collection(FirebaseConstants.usersCollection)
             .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -54,9 +52,8 @@ class UserRepoImpl implements UserRepoInterface {
   @override
   Future<ResultHandler<bool, ServerFailure>> isOnline() async {
     try {
-      var connectivityResult = await Connectivity().checkConnectivity();
-      if (connectivityResult.contains(ConnectivityResult.wifi) ||
-          connectivityResult.contains(ConnectivityResult.mobile)) {
+      var connected = await InternetConnection.isConnected();
+      if (connected) {
         return ResultHandler.success(
             data: FirebaseAuth.instance.currentUser == null ? false : true);
       } else {
@@ -74,9 +71,8 @@ class UserRepoImpl implements UserRepoInterface {
     required BmiModel updatedBmiModel,
   }) async {
     try {
-      var connectivityResult = await Connectivity().checkConnectivity();
-      if (connectivityResult.contains(ConnectivityResult.wifi) ||
-          connectivityResult.contains(ConnectivityResult.mobile)) {
+      var connected = await InternetConnection.isConnected();
+      if (connected) {
         await FirebaseFirestore.instance
             .collection(FirebaseConstants.usersCollection)
             .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -97,9 +93,8 @@ class UserRepoImpl implements UserRepoInterface {
   Future<ResultHandler<bool, ServerFailure>> deleteBmiEntry(
       {required String bmiEntryReference}) async {
     try {
-      var connectivityResult = await Connectivity().checkConnectivity();
-      if (connectivityResult.contains(ConnectivityResult.wifi) ||
-          connectivityResult.contains(ConnectivityResult.mobile)) {
+      var connected = await InternetConnection.isConnected();
+      if (connected) {
         await FirebaseFirestore.instance
             .collection(FirebaseConstants.usersCollection)
             .doc(FirebaseAuth.instance.currentUser!.uid)

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bmi_tracker/core/utils/dialog/helper_dialog.dart';
 import 'package:bmi_tracker/core/utils/snackbar/handler_snackbar.dart';
 import 'package:bmi_tracker/model/bmi_model/bmi_model.dart';
@@ -19,10 +21,11 @@ class _BMIEntriesState extends State<BMIEntries> {
 
   @override
   void initState() {
+    log('===================initState====================');
     super.initState();
     controller.addListener(() {
       if (controller.offset >= controller.position.maxScrollExtent) {
-        context.read<BmiEntriesViewmodel>().bmiStream(loadNextPage: true);
+        context.read<BmiEntriesViewmodel>().bmiStream();
       }
     });
     context.read<BmiEntriesViewmodel>().bmiStream();
@@ -31,6 +34,7 @@ class _BMIEntriesState extends State<BMIEntries> {
   @override
   void dispose() {
     controller.dispose();
+    log('===================dispose====================');
     super.dispose();
   }
 
@@ -58,102 +62,80 @@ class _BMIEntriesState extends State<BMIEntries> {
         }
       },
       builder: (context, state) {
-        if (state.isStreamInitialized == false) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        return Column(
-          children: [
-            Expanded(
-              child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                stream: state.bmiStream,
-                builder: (context, snapshot) {
-                  List<BmiModel> entries = [];
+        log('===================builder====================');
+        return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+          stream: state.bmiStreamController.stream,
+          builder: (context, snapshot) {
+            log('===================bmiStream====================\n${snapshot.connectionState}');
 
-                  /// get the previous data stream if loading for second time
-                  if (snapshot.connectionState == ConnectionState.waiting &&
-                      snapshot.hasData) {
-                    entries = snapshot.requireData.docs
-                        .map<BmiModel>(
-                          (e) => BmiModel.fromJson(e.data()),
-                        )
-                        .toList();
-                  }
-                  if (snapshot.connectionState == ConnectionState.active) {
-                    entries = snapshot.data!.docs
-                        .map<BmiModel>(
-                          (e) => BmiModel.fromJson(e.data()),
-                        )
-                        .toList();
-                    context.read<BmiEntriesViewmodel>().setLastDocumentSnapshot(
-                        lastDocumentSnapshot: snapshot.data!.docs.last);
-                  }
-                  return entries.isEmpty
-                      ? const Center(child: Text('No entries yet'))
-                      : ListView.separated(
-                          controller: controller,
-                          itemCount: entries.length + 1,
-                          physics: const BouncingScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            if (index < entries.length) {
-                              return BmiEntryItem(
-                                bmiModel: entries[index],
-                                onEdit: () async {
-                                  await showEditDialog(context, onEdit: () {})
-                                      .then(
-                                    (updatedData) {
-                                      if (updatedData != null) {
-                                        var weight = updatedData.weight.isEmpty
-                                            ? entries[index].weight
-                                            : double.parse(updatedData.weight);
-                                        var height = updatedData.height.isEmpty
-                                            ? entries[index].height
-                                            : double.parse(
-                                                updatedData.height,
-                                              );
-                                        context
-                                            .read<BmiEntriesViewmodel>()
-                                            .updateBmiEntry(
-                                              bmiEntryReference: snapshot.data!
-                                                  .docs[index].reference.id,
-                                              bmiModel: entries[index],
-                                              height: height,
-                                              weight: weight,
-                                            );
-                                      }
-                                    },
-                                  );
-                                },
-                                onDelete: () {
-                                  showDeleteDialog(
-                                    context,
-                                    onDelete: () {
-                                      context
-                                          .read<BmiEntriesViewmodel>()
-                                          .deleteBmiEntry(
-                                              bmiEntryReference: snapshot.data!
-                                                  .docs[index].reference.id);
-                                      Navigator.pop(context);
-                                    },
-                                  );
+            if (snapshot.hasError) {
+              return const Center(child: Text('Something went wrong'));
+            } else if (snapshot.hasData) {
+              List<BmiModel> entries = snapshot.data!.docs
+                  .map<BmiModel>(
+                    (e) => BmiModel.fromJson(e.data()),
+                  )
+                  .toList();
+
+              return entries.isEmpty
+                  ? const Center(child: Text('No entries yet'))
+                  : ListView.separated(
+                      controller: controller,
+                      itemCount: entries.length + 1,
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        if (index < entries.length) {
+                          return BmiEntryItem(
+                            bmiModel: entries[index],
+                            onEdit: () async {
+                              await showEditDialog(context, onEdit: () {}).then(
+                                (updatedData) {
+                                  if (updatedData != null) {
+                                    context
+                                        .read<BmiEntriesViewmodel>()
+                                        .updateBmiEntry(
+                                          bmiEntryReference: snapshot
+                                              .data!.docs[index].reference.id,
+                                          bmiModel: entries[index],
+                                          height: double.parse(
+                                            updatedData.height,
+                                          ),
+                                          weight: double.parse(
+                                            updatedData.weight,
+                                          ),
+                                        );
+                                  }
                                 },
                               );
-                            } else {
-                              if (state.loadNextPage) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              } else {
-                                return const SizedBox();
-                              }
-                            }
-                          },
-                          separatorBuilder: (context, index) => const Divider(),
-                        );
-                },
-              ),
-            ),
-            // if (state.loadNextPage)
-            //   const Center(child: CircularProgressIndicator()),
-          ],
+                            },
+                            onDelete: () {
+                              showDeleteDialog(
+                                context,
+                                onDelete: () {
+                                  context
+                                      .read<BmiEntriesViewmodel>()
+                                      .deleteBmiEntry(
+                                          bmiEntryReference: snapshot
+                                              .data!.docs[index].reference.id);
+                                  Navigator.pop(context);
+                                },
+                              );
+                            },
+                          );
+                        } else {
+                          if (state.loadNextPage) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          } else {
+                            return const SizedBox();
+                          }
+                        }
+                      },
+                      separatorBuilder: (context, index) => const Divider(),
+                    );
+            }
+            return const Center(child: CircularProgressIndicator());
+          },
         );
       },
     );

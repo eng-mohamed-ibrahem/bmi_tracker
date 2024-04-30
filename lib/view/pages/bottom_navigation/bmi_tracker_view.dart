@@ -62,7 +62,7 @@ class _MBITrackerState extends State<MBITracker> {
                 suffixIcon:
                     Text('Cm', style: Theme.of(context).textTheme.bodySmall),
                 validator: (value) {
-                  if (value!.isEmpty) {
+                  if (value!.isEmpty || double.parse(value) == 0) {
                     return 'Please enter your height';
                   }
                   if (double.parse(value) > 300) {
@@ -84,7 +84,7 @@ class _MBITrackerState extends State<MBITracker> {
                 suffixIcon:
                     Text('Kg', style: Theme.of(context).textTheme.bodySmall),
                 validator: (value) {
-                  if (value!.isEmpty) {
+                  if (value!.isEmpty || double.parse(value) == 0) {
                     return 'Please enter your weight';
                   }
                   if (double.parse(value) > 300) {

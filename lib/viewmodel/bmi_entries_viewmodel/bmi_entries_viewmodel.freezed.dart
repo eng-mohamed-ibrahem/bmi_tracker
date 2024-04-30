@@ -19,12 +19,12 @@ mixin _$BmiEntriesViewmodelState {
   bool get isInitialized => throw _privateConstructorUsedError;
   int get entriesCountPerPage => throw _privateConstructorUsedError;
   int get countLoadedEntries => throw _privateConstructorUsedError;
-  int get currentInRangEntries => throw _privateConstructorUsedError;
+  int get currentLimit => throw _privateConstructorUsedError;
   bool get loadNextPage => throw _privateConstructorUsedError;
   bool get isStreamInitialized => throw _privateConstructorUsedError;
   bool get isStreamError => throw _privateConstructorUsedError;
-  Stream<QuerySnapshot<Map<String, dynamic>>>? get bmiStream =>
-      throw _privateConstructorUsedError;
+  StreamController<QuerySnapshot<Map<String, dynamic>>>
+      get bmiStreamController => throw _privateConstructorUsedError;
   DocumentSnapshot<Object?>? get lastDocumentSnapshot =>
       throw _privateConstructorUsedError;
   bool get isBmiEntryUpdating => throw _privateConstructorUsedError;
@@ -50,11 +50,11 @@ abstract class $BmiEntriesViewmodelStateCopyWith<$Res> {
       {bool isInitialized,
       int entriesCountPerPage,
       int countLoadedEntries,
-      int currentInRangEntries,
+      int currentLimit,
       bool loadNextPage,
       bool isStreamInitialized,
       bool isStreamError,
-      Stream<QuerySnapshot<Map<String, dynamic>>>? bmiStream,
+      StreamController<QuerySnapshot<Map<String, dynamic>>> bmiStreamController,
       DocumentSnapshot<Object?>? lastDocumentSnapshot,
       bool isBmiEntryUpdating,
       bool isBmiEntryUpdated,
@@ -82,11 +82,11 @@ class _$BmiEntriesViewmodelStateCopyWithImpl<$Res,
     Object? isInitialized = null,
     Object? entriesCountPerPage = null,
     Object? countLoadedEntries = null,
-    Object? currentInRangEntries = null,
+    Object? currentLimit = null,
     Object? loadNextPage = null,
     Object? isStreamInitialized = null,
     Object? isStreamError = null,
-    Object? bmiStream = freezed,
+    Object? bmiStreamController = null,
     Object? lastDocumentSnapshot = freezed,
     Object? isBmiEntryUpdating = null,
     Object? isBmiEntryUpdated = null,
@@ -109,9 +109,9 @@ class _$BmiEntriesViewmodelStateCopyWithImpl<$Res,
           ? _value.countLoadedEntries
           : countLoadedEntries // ignore: cast_nullable_to_non_nullable
               as int,
-      currentInRangEntries: null == currentInRangEntries
-          ? _value.currentInRangEntries
-          : currentInRangEntries // ignore: cast_nullable_to_non_nullable
+      currentLimit: null == currentLimit
+          ? _value.currentLimit
+          : currentLimit // ignore: cast_nullable_to_non_nullable
               as int,
       loadNextPage: null == loadNextPage
           ? _value.loadNextPage
@@ -125,10 +125,10 @@ class _$BmiEntriesViewmodelStateCopyWithImpl<$Res,
           ? _value.isStreamError
           : isStreamError // ignore: cast_nullable_to_non_nullable
               as bool,
-      bmiStream: freezed == bmiStream
-          ? _value.bmiStream
-          : bmiStream // ignore: cast_nullable_to_non_nullable
-              as Stream<QuerySnapshot<Map<String, dynamic>>>?,
+      bmiStreamController: null == bmiStreamController
+          ? _value.bmiStreamController
+          : bmiStreamController // ignore: cast_nullable_to_non_nullable
+              as StreamController<QuerySnapshot<Map<String, dynamic>>>,
       lastDocumentSnapshot: freezed == lastDocumentSnapshot
           ? _value.lastDocumentSnapshot
           : lastDocumentSnapshot // ignore: cast_nullable_to_non_nullable
@@ -178,11 +178,11 @@ abstract class _$$BmiEntriesViewmodelStateImplCopyWith<$Res>
       {bool isInitialized,
       int entriesCountPerPage,
       int countLoadedEntries,
-      int currentInRangEntries,
+      int currentLimit,
       bool loadNextPage,
       bool isStreamInitialized,
       bool isStreamError,
-      Stream<QuerySnapshot<Map<String, dynamic>>>? bmiStream,
+      StreamController<QuerySnapshot<Map<String, dynamic>>> bmiStreamController,
       DocumentSnapshot<Object?>? lastDocumentSnapshot,
       bool isBmiEntryUpdating,
       bool isBmiEntryUpdated,
@@ -209,11 +209,11 @@ class __$$BmiEntriesViewmodelStateImplCopyWithImpl<$Res>
     Object? isInitialized = null,
     Object? entriesCountPerPage = null,
     Object? countLoadedEntries = null,
-    Object? currentInRangEntries = null,
+    Object? currentLimit = null,
     Object? loadNextPage = null,
     Object? isStreamInitialized = null,
     Object? isStreamError = null,
-    Object? bmiStream = freezed,
+    Object? bmiStreamController = null,
     Object? lastDocumentSnapshot = freezed,
     Object? isBmiEntryUpdating = null,
     Object? isBmiEntryUpdated = null,
@@ -236,9 +236,9 @@ class __$$BmiEntriesViewmodelStateImplCopyWithImpl<$Res>
           ? _value.countLoadedEntries
           : countLoadedEntries // ignore: cast_nullable_to_non_nullable
               as int,
-      currentInRangEntries: null == currentInRangEntries
-          ? _value.currentInRangEntries
-          : currentInRangEntries // ignore: cast_nullable_to_non_nullable
+      currentLimit: null == currentLimit
+          ? _value.currentLimit
+          : currentLimit // ignore: cast_nullable_to_non_nullable
               as int,
       loadNextPage: null == loadNextPage
           ? _value.loadNextPage
@@ -252,10 +252,10 @@ class __$$BmiEntriesViewmodelStateImplCopyWithImpl<$Res>
           ? _value.isStreamError
           : isStreamError // ignore: cast_nullable_to_non_nullable
               as bool,
-      bmiStream: freezed == bmiStream
-          ? _value.bmiStream
-          : bmiStream // ignore: cast_nullable_to_non_nullable
-              as Stream<QuerySnapshot<Map<String, dynamic>>>?,
+      bmiStreamController: null == bmiStreamController
+          ? _value.bmiStreamController
+          : bmiStreamController // ignore: cast_nullable_to_non_nullable
+              as StreamController<QuerySnapshot<Map<String, dynamic>>>,
       lastDocumentSnapshot: freezed == lastDocumentSnapshot
           ? _value.lastDocumentSnapshot
           : lastDocumentSnapshot // ignore: cast_nullable_to_non_nullable
@@ -294,16 +294,16 @@ class __$$BmiEntriesViewmodelStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$BmiEntriesViewmodelStateImpl implements _BmiEntriesViewmodelState {
+class _$BmiEntriesViewmodelStateImpl extends _BmiEntriesViewmodelState {
   const _$BmiEntriesViewmodelStateImpl(
       {this.isInitialized = true,
       this.entriesCountPerPage = 10,
       this.countLoadedEntries = 0,
-      this.currentInRangEntries = 10,
+      this.currentLimit = 10,
       this.loadNextPage = false,
       this.isStreamInitialized = false,
       this.isStreamError = false,
-      this.bmiStream = null,
+      required this.bmiStreamController,
       this.lastDocumentSnapshot = null,
       this.isBmiEntryUpdating = false,
       this.isBmiEntryUpdated = false,
@@ -311,7 +311,8 @@ class _$BmiEntriesViewmodelStateImpl implements _BmiEntriesViewmodelState {
       this.isBmiEntryDeleting = false,
       this.isBmiEntryDeleted = false,
       this.isBmiEntryDeletedError = false,
-      this.error = null});
+      this.error = null})
+      : super._();
 
   @override
   @JsonKey()
@@ -324,7 +325,7 @@ class _$BmiEntriesViewmodelStateImpl implements _BmiEntriesViewmodelState {
   final int countLoadedEntries;
   @override
   @JsonKey()
-  final int currentInRangEntries;
+  final int currentLimit;
   @override
   @JsonKey()
   final bool loadNextPage;
@@ -335,8 +336,8 @@ class _$BmiEntriesViewmodelStateImpl implements _BmiEntriesViewmodelState {
   @JsonKey()
   final bool isStreamError;
   @override
-  @JsonKey()
-  final Stream<QuerySnapshot<Map<String, dynamic>>>? bmiStream;
+  final StreamController<QuerySnapshot<Map<String, dynamic>>>
+      bmiStreamController;
   @override
   @JsonKey()
   final DocumentSnapshot<Object?>? lastDocumentSnapshot;
@@ -364,7 +365,7 @@ class _$BmiEntriesViewmodelStateImpl implements _BmiEntriesViewmodelState {
 
   @override
   String toString() {
-    return 'BmiEntriesViewmodelState(isInitialized: $isInitialized, entriesCountPerPage: $entriesCountPerPage, countLoadedEntries: $countLoadedEntries, currentInRangEntries: $currentInRangEntries, loadNextPage: $loadNextPage, isStreamInitialized: $isStreamInitialized, isStreamError: $isStreamError, bmiStream: $bmiStream, lastDocumentSnapshot: $lastDocumentSnapshot, isBmiEntryUpdating: $isBmiEntryUpdating, isBmiEntryUpdated: $isBmiEntryUpdated, isBmiEntryUpdatededError: $isBmiEntryUpdatededError, isBmiEntryDeleting: $isBmiEntryDeleting, isBmiEntryDeleted: $isBmiEntryDeleted, isBmiEntryDeletedError: $isBmiEntryDeletedError, error: $error)';
+    return 'BmiEntriesViewmodelState(isInitialized: $isInitialized, entriesCountPerPage: $entriesCountPerPage, countLoadedEntries: $countLoadedEntries, currentLimit: $currentLimit, loadNextPage: $loadNextPage, isStreamInitialized: $isStreamInitialized, isStreamError: $isStreamError, bmiStreamController: $bmiStreamController, lastDocumentSnapshot: $lastDocumentSnapshot, isBmiEntryUpdating: $isBmiEntryUpdating, isBmiEntryUpdated: $isBmiEntryUpdated, isBmiEntryUpdatededError: $isBmiEntryUpdatededError, isBmiEntryDeleting: $isBmiEntryDeleting, isBmiEntryDeleted: $isBmiEntryDeleted, isBmiEntryDeletedError: $isBmiEntryDeletedError, error: $error)';
   }
 
   @override
@@ -378,16 +379,16 @@ class _$BmiEntriesViewmodelStateImpl implements _BmiEntriesViewmodelState {
                 other.entriesCountPerPage == entriesCountPerPage) &&
             (identical(other.countLoadedEntries, countLoadedEntries) ||
                 other.countLoadedEntries == countLoadedEntries) &&
-            (identical(other.currentInRangEntries, currentInRangEntries) ||
-                other.currentInRangEntries == currentInRangEntries) &&
+            (identical(other.currentLimit, currentLimit) ||
+                other.currentLimit == currentLimit) &&
             (identical(other.loadNextPage, loadNextPage) ||
                 other.loadNextPage == loadNextPage) &&
             (identical(other.isStreamInitialized, isStreamInitialized) ||
                 other.isStreamInitialized == isStreamInitialized) &&
             (identical(other.isStreamError, isStreamError) ||
                 other.isStreamError == isStreamError) &&
-            (identical(other.bmiStream, bmiStream) ||
-                other.bmiStream == bmiStream) &&
+            (identical(other.bmiStreamController, bmiStreamController) ||
+                other.bmiStreamController == bmiStreamController) &&
             (identical(other.lastDocumentSnapshot, lastDocumentSnapshot) ||
                 other.lastDocumentSnapshot == lastDocumentSnapshot) &&
             (identical(other.isBmiEntryUpdating, isBmiEntryUpdating) ||
@@ -412,11 +413,11 @@ class _$BmiEntriesViewmodelStateImpl implements _BmiEntriesViewmodelState {
       isInitialized,
       entriesCountPerPage,
       countLoadedEntries,
-      currentInRangEntries,
+      currentLimit,
       loadNextPage,
       isStreamInitialized,
       isStreamError,
-      bmiStream,
+      bmiStreamController,
       lastDocumentSnapshot,
       isBmiEntryUpdating,
       isBmiEntryUpdated,
@@ -434,16 +435,17 @@ class _$BmiEntriesViewmodelStateImpl implements _BmiEntriesViewmodelState {
           _$BmiEntriesViewmodelStateImpl>(this, _$identity);
 }
 
-abstract class _BmiEntriesViewmodelState implements BmiEntriesViewmodelState {
+abstract class _BmiEntriesViewmodelState extends BmiEntriesViewmodelState {
   const factory _BmiEntriesViewmodelState(
       {final bool isInitialized,
       final int entriesCountPerPage,
       final int countLoadedEntries,
-      final int currentInRangEntries,
+      final int currentLimit,
       final bool loadNextPage,
       final bool isStreamInitialized,
       final bool isStreamError,
-      final Stream<QuerySnapshot<Map<String, dynamic>>>? bmiStream,
+      required final StreamController<QuerySnapshot<Map<String, dynamic>>>
+          bmiStreamController,
       final DocumentSnapshot<Object?>? lastDocumentSnapshot,
       final bool isBmiEntryUpdating,
       final bool isBmiEntryUpdated,
@@ -452,6 +454,7 @@ abstract class _BmiEntriesViewmodelState implements BmiEntriesViewmodelState {
       final bool isBmiEntryDeleted,
       final bool isBmiEntryDeletedError,
       final String? error}) = _$BmiEntriesViewmodelStateImpl;
+  const _BmiEntriesViewmodelState._() : super._();
 
   @override
   bool get isInitialized;
@@ -460,7 +463,7 @@ abstract class _BmiEntriesViewmodelState implements BmiEntriesViewmodelState {
   @override
   int get countLoadedEntries;
   @override
-  int get currentInRangEntries;
+  int get currentLimit;
   @override
   bool get loadNextPage;
   @override
@@ -468,7 +471,7 @@ abstract class _BmiEntriesViewmodelState implements BmiEntriesViewmodelState {
   @override
   bool get isStreamError;
   @override
-  Stream<QuerySnapshot<Map<String, dynamic>>>? get bmiStream;
+  StreamController<QuerySnapshot<Map<String, dynamic>>> get bmiStreamController;
   @override
   DocumentSnapshot<Object?>? get lastDocumentSnapshot;
   @override
